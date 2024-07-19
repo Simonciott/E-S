@@ -33,7 +33,37 @@ namespace DoomahLevelLoader
         public static string currentLevelpath = null;
         public static List<AssetBundleInfo> AssetBundles = [];
 
-        public static void LoadLevels() => Directory.GetFiles(LevelsPath, "*.doomah").ToList().ForEach(UnzipAndLoadBundles);
+        public static string PartedLevels = Path.Combine(LevelsPath, "PartedLevels" + Path.DirectorySeparatorChar);
+
+        public static void LoadLevels()
+		{
+			Directory.GetDirectories(PartedLevels).ToList().ForEach(JoinSplitFilesIntoDoomah);
+			Directory.GetFiles(LevelsPath, "*.doomah").ToList().ForEach(UnzipAndLoadBundles);
+		}
+
+		private static void JoinSplitFilesIntoDoomah(string folder)
+		{
+			string doomahFileName = Path.GetFileName(folder) + ".doomah";
+			string doomahFilePath = Path.Combine(LevelsPath, doomahFileName);
+
+			if (File.Exists(doomahFilePath)) return;
+
+			try
+			{
+                List<byte> doomahBinaryData = new List<byte>(); // creates a byte buffer where all the .doomahpart files' data gets appended one file at a time (in "0-9 a-z" order)
+				Directory.GetFiles(folder, "*.doomahpart").ToList().ForEach(part =>
+				{
+					doomahBinaryData.AddRange(File.ReadAllBytes(part).ToList()); // every element's data gets appended to doomahBinaryData
+				});
+
+				using (FileStream filestream = new FileStream(doomahFilePath, FileMode.Create, FileAccess.ReadWrite))
+					filestream.Write(doomahBinaryData.ToArray(), 0, doomahBinaryData.Count());
+            }
+			catch (Exception ex)
+			{
+				UnityEngine.Debug.LogError($"An error occurred during the joining of file \"{doomahFileName}\". The thrown error is as follows:\n\n{ex.Message}\n\n");
+			}
+        }
 
         public static void RefreshLevels()
         {

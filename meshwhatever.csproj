@@ -25,19 +25,24 @@
 				<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 				<PrivateAssets>all</PrivateAssets>
 		</PackageReference>
-		<Publicize Include="Assembly-CSharp" />
 	<Reference Include="lib\Assembly-CSharp.dll" />
 	<Reference Include="lib\0Harmony.dll" />
 	<Reference Include="lib\BepInEx.dll" />
-	<Reference Include="lib\UnityEngine.AssetBundleModule.dll" />
-	<Reference Include="lib\UnityEngine.dll" />
 	<Reference Include="lib\UnityEngine.UI.dll" />
 	<Reference Include="lib\UnityUIExtensions.dll" />
-	<Reference Include="lib\UnityEngine.CoreModule.dll" />
 	<Reference Include="lib\Unity.Addressables.dll" />
 	<Reference Include="lib\Unity.ResourceManager.dll" />
 	<Reference Include="lib\Unity.TextMeshPro.dll" />
 	<Reference Include="lib\Newtonsoft.Json.dll" />
+	<Reference Include="UnityEngine">
+	  <HintPath>lib\UnityEngine.dll</HintPath>
+	</Reference>
+	<Reference Include="UnityEngine.AssetBundleModule">
+	  <HintPath>lib\UnityEngine.AssetBundleModule.dll</HintPath>
+	</Reference>
+	<Reference Include="UnityEngine.CoreModule">
+	  <HintPath>lib\UnityEngine.CoreModule.dll</HintPath>
+	</Reference>
 	</ItemGroup>
 
 	<ItemGroup>
