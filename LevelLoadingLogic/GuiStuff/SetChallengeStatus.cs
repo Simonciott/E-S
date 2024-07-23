@@ -10,16 +10,8 @@ namespace DoomahLevelLoader
 
         public void Awake()
         {
-            if (Active)
-            {
-                MonoSingleton<ChallengeManager>.Instance.challengeFailed = false;
-                MonoSingleton<ChallengeManager>.Instance.challengeDone = true;
-            }
-            else
-            {
-                MonoSingleton<ChallengeManager>.Instance.challengeFailed = true;
-                MonoSingleton<ChallengeManager>.Instance.challengeDone = false;
-            }
+            MonoSingleton<ChallengeManager>.Instance.challengeFailed = !Active;
+            MonoSingleton<ChallengeManager>.Instance.challengeDone = Active;
         }
     }
 }

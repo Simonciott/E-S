@@ -39,20 +39,15 @@ namespace DoomahLevelLoader
 
         private void ToggleMenu()
         {
-            if (AssignToFuckingLevels.activeSelf == false)
-            {
-                AssignToFuckingLevels.SetActive(true);
-                AssignToMenuOpenButton.gameObject.SetActive(false);
-                MainMenuAgony.isAgonyOpen = true;
+            bool active = AssignToFuckingLevels.activeSelf; // nebula. using an if else for a bool? TWICE?? :(
+
+            AssignToFuckingLevels.SetActive(!active);
+            AssignToMenuOpenButton.gameObject.SetActive(active);
+            MainMenuAgony.isAgonyOpen = !active;
+            if(active)
                 Debug.Log("open");
-            }
             else
-            {
-                AssignToFuckingLevels.SetActive(false);
-                AssignToMenuOpenButton.gameObject.SetActive(true);
-                MainMenuAgony.isAgonyOpen = false;
                 Debug.Log("close");
-            }
         }
     }
 }
